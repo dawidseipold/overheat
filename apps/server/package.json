@@ -10,12 +10,14 @@
     "dev": "bun --watch src/index.ts",
     "start": "bun src/index.ts",
     "build": "bun build src/index.ts --target=bun --outdir=dist",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "db:migrate": "bun src/db/migrate.ts"
   },
   "dependencies": {
     "@app/shared": "workspace:*",
     "@elysiajs/cors": "^1.4.2",
     "elysia": "^1.4.30",
+    "surrealdb": "^2.2.0",
     "valibot": "^1.5.0"
   },
   "devDependencies": {
