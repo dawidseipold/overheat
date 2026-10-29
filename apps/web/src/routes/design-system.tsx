@@ -1,13 +1,24 @@
+import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon, PlusIcon } from "lucide-react";
+import * as v from "valibot";
 
 import { Button } from "@/components/ui/button";
+import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import { Input } from "@/components/ui/input";
 import { Text } from "@/components/ui/typography";
 
 export const Route = createFileRoute("/design-system")({
   component: DesignSystem,
 });
+
+// Kod pokoju: dokładnie 6 wielkich liter lub cyfr
+const RoomCodeSchema = v.pipe(
+  v.string(),
+  v.length(6, "Room code must be exactly 6 characters"),
+  v.regex(/^[A-Z0-9]+$/, "Only letters and digits"),
+);
 
 function DesignSystem() {
   // Udawane zapytanie do serwera (1,5 s), żeby pokazać stan ładowania przycisku
@@ -60,6 +71,67 @@ function DesignSystem() {
           Click "Join room" to preview the loading state.
         </Text>
       </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Form controls
+        </Text>
+        <JoinRoomForm />
+      </section>
     </main>
+  );
+}
+
+function JoinRoomForm() {
+  const form = useForm({
+    defaultValues: { roomCode: "" },
+    // Udawane wysłanie do serwera (1,5 s)
+    onSubmit: async () => {
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+    },
+  });
+
+  return (
+    <form
+      className="space-y-4"
+      onSubmit={(event) => {
+        event.preventDefault();
+        void form.handleSubmit();
+      }}
+    >
+      <form.Field
+        name="roomCode"
+        validators={{ onBlur: RoomCodeSchema, onSubmit: RoomCodeSchema }}
+        children={(field) => (
+          <Field>
+            <FieldLabel htmlFor={field.name}>Room code</FieldLabel>
+            <Input
+              id={field.name}
+              name={field.name}
+              placeholder="XK92QP"
+              maxLength={6}
+              value={field.state.value}
+              onBlur={field.handleBlur}
+              onChange={(event) => field.handleChange(event.target.value.toUpperCase())}
+              aria-invalid={!field.state.meta.isValid}
+            />
+            {field.state.meta.isValid ? (
+              <FieldDescription>6 letters or digits from your host.</FieldDescription>
+            ) : (
+              <FieldError errors={field.state.meta.errors} />
+            )}
+          </Field>
+        )}
+      />
+      <form.Subscribe
+        selector={(state) => state.isSubmitting}
+        children={(isSubmitting) => (
+          <Button type="submit" variant="outline" loading={isSubmitting}>
+            <ArrowRightIcon />
+            Join room
+          </Button>
+        )}
+      />
+    </form>
   );
 }
