@@ -114,6 +114,7 @@
 
   /* Odstęp liter w małych etykietach mono (0.08–0.16em) */
   --tracking-label: 0.12em;
+  --tracking-button: 0.06em;
 
   /* Zaokrąglenia: kanciasto, nigdy "pigułki" */
   --radius-sm: 2px;
