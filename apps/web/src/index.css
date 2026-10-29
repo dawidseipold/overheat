@@ -3,54 +3,55 @@
 
 @custom-variant dark (&:is(.dark *));
 
-:root {
-  --radius: 0.625rem;
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-}
+/*
+ * OVERHEAT — tokeny design systemu
+ * Źródło: https://overheat-design-studio--dawidson09.replit.app/ (Tokens & export)
+ * Motyw jest tylko ciemny, więc wszystko siedzi w :root.
+ */
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
+:root {
+  /* Paleta OVERHEAT */
+  --oh-void: #09090e; /* główne tło */
+  --oh-base: #111118; /* tło aplikacji */
+  --oh-surface: #1a1924; /* karty i panele */
+  --oh-elevated: #252131; /* elementy wyniesione */
+  --oh-violet: #a56be8; /* akcent marki, używać oszczędnie */
+  --oh-plasma: #c596ff; /* highlight / hover */
+  --oh-ghost: #f1eef2; /* główny tekst */
+  --oh-secondary: #b6b0c0; /* opisy */
+  --oh-muted: #9995a6; /* cichy tekst */
+  --oh-border: #393143; /* separatory */
+  --oh-success: #75d8ad; /* poprawna odpowiedź */
+  --oh-danger: #f07382; /* błędna odpowiedź */
+  --oh-warning: #f2bc72; /* kończy się czas */
+
+  /* Role shadcn podpięte pod paletę OVERHEAT */
+  --background: var(--oh-void);
+  --foreground: var(--oh-ghost);
+  --card: var(--oh-surface);
+  --card-foreground: var(--oh-ghost);
+  --popover: var(--oh-elevated);
+  --popover-foreground: var(--oh-ghost);
+  --primary: var(--oh-ghost);
+  --primary-foreground: var(--oh-void);
+  --secondary: var(--oh-surface);
+  --secondary-foreground: var(--oh-ghost);
+  --muted: var(--oh-surface);
+  --muted-foreground: var(--oh-muted);
+  --accent: var(--oh-elevated);
+  --accent-foreground: var(--oh-ghost);
+  --destructive: var(--oh-danger);
+  --border: var(--oh-border);
+  --input: var(--oh-border);
+  --ring: var(--oh-violet);
+
+  /* Ruch: 120–350ms mikrointerakcje, 400–900ms przejścia ekranów */
+  --motion-micro: 200ms;
+  --motion-screen: 650ms;
 }
 
 @theme inline {
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  /* Kolory: role shadcn (bg-background, text-muted-foreground, ...) */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -69,6 +70,68 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+
+  /* Kolory: paleta OVERHEAT (bg-oh-surface, text-oh-plasma, ...) */
+  --color-oh-void: var(--oh-void);
+  --color-oh-base: var(--oh-base);
+  --color-oh-surface: var(--oh-surface);
+  --color-oh-elevated: var(--oh-elevated);
+  --color-oh-violet: var(--oh-violet);
+  --color-oh-plasma: var(--oh-plasma);
+  --color-oh-ghost: var(--oh-ghost);
+  --color-oh-secondary: var(--oh-secondary);
+  --color-oh-muted: var(--oh-muted);
+  --color-oh-border: var(--oh-border);
+  --color-oh-success: var(--oh-success);
+  --color-oh-danger: var(--oh-danger);
+  --color-oh-warning: var(--oh-warning);
+
+  /* Czcionki (font-display, font-heading, font-data; Inter jest domyślny) */
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Anton", sans-serif;
+  --font-heading: "Barlow Condensed", sans-serif;
+  --font-data: "IBM Plex Mono", monospace;
+
+  /* Typografia (text-display, text-h1, ... text-data) */
+  --text-display: 112px;
+  --text-display--line-height: 112px;
+  --text-h1: 72px;
+  --text-h1--line-height: 76px;
+  --text-h2: 48px;
+  --text-h2--line-height: 54px;
+  --text-h3: 32px;
+  --text-h3--line-height: 38px;
+  --text-button: 24px;
+  --text-button--line-height: 29px;
+  --text-label: 12px;
+  --text-label--line-height: 18px;
+  --text-body: 16px;
+  --text-body--line-height: 25px;
+  --text-body-sm: 14px;
+  --text-body-sm--line-height: 22px;
+  --text-data: 56px;
+  --text-data--line-height: 62px;
+
+  /* Odstęp liter w małych etykietach mono (0.08–0.16em) */
+  --tracking-label: 0.12em;
+
+  /* Zaokrąglenia: kanciasto, nigdy "pigułki" */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 8px;
+
+  /* Siatka desktop: max 1280px (max-w-app) */
+  --container-app: 1280px;
+
+  /* Easing "back out" z Transitions Lab (ease-back-out) */
+  --ease-back-out: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /*
+   * Spacing: skala OVERHEAT (4, 8, 12, 16, 24, 32, 48, 64, 96 px) pokrywa się
+   * z domyślną skalą Tailwinda (1 = 4px): p-1, p-2, p-3, p-4, p-6, p-8, p-12, p-16, p-24.
+   * Używaj tylko tych wartości.
+   */
 }
 
 @layer base {
@@ -76,6 +139,6 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground antialiased;
   }
 }
