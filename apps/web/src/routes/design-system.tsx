@@ -2,8 +2,10 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon, PlusIcon } from "lucide-react";
+import { useState } from "react";
 import * as v from "valibot";
 
+import { AnswerOption } from "@/components/ui/answer-option";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
@@ -78,6 +80,14 @@ function DesignSystem() {
           Form controls
         </Text>
         <JoinRoomForm />
+      </section>
+
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Answer options
+        </Text>
+        <AnswerOptionsDemo />
       </section>
     </main>
   );
@@ -156,5 +166,52 @@ function JoinRoomForm() {
         )}
       />
     </form>
+  );
+}
+
+const answers = [
+  { letter: "A", text: "Venus" },
+  { letter: "B", text: "Saturn" },
+  { letter: "C", text: "Earth" },
+  { letter: "D", text: "Mars" },
+];
+const correctLetter = "B";
+
+function AnswerOptionsDemo() {
+  const [selected, setSelected] = useState<string | null>(null);
+  const [revealed, setRevealed] = useState(false);
+
+  function getState(letter: string) {
+    if (!revealed) return selected === letter ? "selected" : "default";
+    if (letter === correctLetter) return "correct";
+    return selected === letter ? "wrong" : "default";
+  }
+
+  return (
+    <div className="space-y-4">
+      <div className="space-y-2">
+        {answers.map((answer) => (
+          <AnswerOption
+            key={answer.letter}
+            letter={answer.letter}
+            state={getState(answer.letter)}
+            disabled={revealed}
+            onClick={() => setSelected(answer.letter)}
+          >
+            {answer.text}
+          </AnswerOption>
+        ))}
+      </div>
+      <Button
+        variant="secondary"
+        disabled={selected === null}
+        onClick={() => {
+          if (revealed) setSelected(null);
+          setRevealed(!revealed);
+        }}
+      >
+        {revealed ? "Play again" : "Reveal answer"}
+      </Button>
+    </div>
   );
 }
