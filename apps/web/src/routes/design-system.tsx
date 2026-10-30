@@ -5,6 +5,8 @@ import { ArrowRightIcon, PlusIcon } from "lucide-react";
 import { useState } from "react";
 import * as v from "valibot";
 
+import { Alert } from "@/components/ui/alert";
+import { Badge } from "@/components/ui/badge";
 import { AnswerOption } from "@/components/ui/answer-option";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
@@ -88,6 +90,37 @@ function DesignSystem() {
           Answer options
         </Text>
         <AnswerOptionsDemo />
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Badges
+        </Text>
+        <div className="flex flex-wrap gap-2">
+          <Badge>Open</Badge>
+          <Badge variant="accent">Host</Badge>
+          <Badge variant="success">Ready</Badge>
+          <Badge variant="warning">Low time</Badge>
+          <Badge variant="danger">Error</Badge>
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Feedback states
+        </Text>
+        <div className="space-y-3">
+          <Alert variant="success" label="Success">
+            Correct answer
+          </Alert>
+          <Alert variant="danger" label="Error">
+            Wrong answer
+          </Alert>
+          <Alert variant="warning" label="Warning">
+            Timer running low
+          </Alert>
+          <Alert label="Info">Waiting for players</Alert>
+        </div>
       </section>
     </main>
   );
