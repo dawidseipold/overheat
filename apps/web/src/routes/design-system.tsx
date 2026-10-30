@@ -7,6 +7,7 @@ import * as v from "valibot";
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { Switch } from "@/components/ui/switch";
 import { Text } from "@/components/ui/typography";
 
 export const Route = createFileRoute("/design-system")({
@@ -84,7 +85,7 @@ function DesignSystem() {
 
 function JoinRoomForm() {
   const form = useForm({
-    defaultValues: { roomCode: "" },
+    defaultValues: { roomCode: "", soundEnabled: true },
     // Udawane wysłanie do serwera (1,5 s)
     onSubmit: async () => {
       await new Promise((resolve) => setTimeout(resolve, 1500));
@@ -123,7 +124,29 @@ function JoinRoomForm() {
           </Field>
         )}
       />
+
+      <form.Field
+        name="soundEnabled"
+        children={(field) => (
+          <Field className="flex-row items-center gap-3">
+            <Switch
+              id={field.name}
+              name={field.name}
+              checked={field.state.value}
+              onBlur={field.handleBlur}
+              onCheckedChange={field.handleChange}
+            />
+            <Text asChild>
+              <label htmlFor={field.name}>
+                Sound effects {field.state.value ? "enabled" : "disabled"}
+              </label>
+            </Text>
+          </Field>
+        )}
+      />
+
       <form.Subscribe
+
         selector={(state) => state.isSubmitting}
         children={(isSubmitting) => (
           <Button type="submit" variant="outline" loading={isSubmitting}>
