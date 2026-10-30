@@ -11,7 +11,11 @@ import { AnswerOption } from "@/components/ui/answer-option";
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardLabel, CardTitle } from "@/components/ui/card";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
+import { GameHeader } from "@/components/ui/game-header";
 import { Input } from "@/components/ui/input";
+import { ModeCard } from "@/components/ui/mode-card";
+import { PlayerSlot } from "@/components/ui/player-slot";
+import { ScoreCard } from "@/components/ui/score-card";
 import { Switch } from "@/components/ui/switch";
 import { Timer } from "@/components/ui/timer";
 import { Text } from "@/components/ui/typography";
@@ -145,6 +149,44 @@ function DesignSystem() {
           Timer
         </Text>
         <TimerDemo />
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Game header
+        </Text>
+        <GameHeader>Room / XK92QP</GameHeader>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Player slots
+        </Text>
+        <div className="grid grid-cols-2 gap-2">
+          <PlayerSlot nickname="You" isHost isReady />
+          <PlayerSlot nickname="Phantom" isReady />
+          <PlayerSlot nickname="Pixelwolf" />
+          <PlayerSlot nickname="Nomad" isConnected={false} />
+          <PlayerSlot />
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Score cards
+        </Text>
+        <div className="grid grid-cols-3 gap-2">
+          <ScoreCard place="1st" score={4250} />
+          <ScoreCard place="2nd" score={3800} />
+          <ScoreCard place="3rd" score={2450} />
+        </div>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Mode cards
+        </Text>
+        <ModeCardsDemo />
       </section>
     </main>
   );
@@ -290,6 +332,30 @@ function TimerDemo() {
       <Button variant="secondary" onClick={() => setSeconds(total)}>
         Restart
       </Button>
+    </div>
+  );
+}
+
+const modes = [
+  { title: "Classic", description: "Fast-paced knowledge duel" },
+  { title: "Survival", description: "One life. No second chances." },
+  { title: "Blind rank", description: "Predict your top five." },
+];
+
+function ModeCardsDemo() {
+  const [selectedMode, setSelectedMode] = useState("Classic");
+
+  return (
+    <div className="space-y-2">
+      {modes.map((mode) => (
+        <ModeCard
+          key={mode.title}
+          title={mode.title}
+          description={mode.description}
+          selected={selectedMode === mode.title}
+          onClick={() => setSelectedMode(mode.title)}
+        />
+      ))}
     </div>
   );
 }
