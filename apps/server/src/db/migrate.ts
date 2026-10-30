@@ -33,4 +33,9 @@ for (const file of files) {
   console.log(`✔ ${file}`);
 }
 
+const [, info] = await db.query<[unknown, { tables: Record<string, string> }]>(
+  `USE NS \`${ns}\` DB \`${dbName}\`; INFO FOR DB;`,
+);
+console.log(`Tabele: ${Object.keys(info.tables).sort().join(", ")}`);
+
 await db.close();
