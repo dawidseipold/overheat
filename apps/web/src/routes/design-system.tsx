@@ -2,16 +2,18 @@ import { useForm } from "@tanstack/react-form";
 import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { ArrowRightIcon, PlusIcon } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as v from "valibot";
 
 import { Alert } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { AnswerOption } from "@/components/ui/answer-option";
 import { Button } from "@/components/ui/button";
+import { Card, CardHeader, CardLabel, CardTitle } from "@/components/ui/card";
 import { Field, FieldDescription, FieldError, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
+import { Timer } from "@/components/ui/timer";
 import { Text } from "@/components/ui/typography";
 
 export const Route = createFileRoute("/design-system")({
@@ -121,6 +123,28 @@ function DesignSystem() {
           </Alert>
           <Alert label="Info">Waiting for players</Alert>
         </div>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Card
+        </Text>
+        <Card>
+          <CardHeader>
+            <CardTitle>Room rules</CardTitle>
+            <CardLabel>Classic</CardLabel>
+          </CardHeader>
+          <Text variant="body-sm" tone="secondary">
+            Ten rounds, eight seconds per question.
+          </Text>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <Text variant="label" tone="muted">
+          Timer
+        </Text>
+        <TimerDemo />
       </section>
     </main>
   );
@@ -244,6 +268,27 @@ function AnswerOptionsDemo() {
         }}
       >
         {revealed ? "Play again" : "Reveal answer"}
+      </Button>
+    </div>
+  );
+}
+
+function TimerDemo() {
+  const total = 15;
+  const [seconds, setSeconds] = useState(total);
+
+  // Co sekundę odejmuje jeden, aż dojdzie do zera
+  useEffect(() => {
+    if (seconds === 0) return;
+    const timeout = setTimeout(() => setSeconds(seconds - 1), 1000);
+    return () => clearTimeout(timeout);
+  }, [seconds]);
+
+  return (
+    <div className="space-y-4">
+      <Timer seconds={seconds} total={total} />
+      <Button variant="secondary" onClick={() => setSeconds(total)}>
+        Restart
       </Button>
     </div>
   );
