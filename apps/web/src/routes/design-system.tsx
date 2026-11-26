@@ -38,7 +38,7 @@ function DesignSystem() {
   });
 
   return (
-    <main className="space-y-12">
+      <main className="mx-auto max-w-3xl space-y-12 p-6">
       <Text variant="display">Overheat</Text>
 
       <section className="space-y-4">
